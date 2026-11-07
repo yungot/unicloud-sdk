@@ -1,0 +1,8 @@
+{
+  "name": "music-guarded-example",
+  "dependencies": {
+    "ucd-device-auth": "file:../common/ucd-device-auth",
+    "uni-id-common": "file:../../../uni_modules/uni-id-common/uniCloud/cloudfunctions/common/uni-id-common"
+  },
+  "extensions": {}
+}

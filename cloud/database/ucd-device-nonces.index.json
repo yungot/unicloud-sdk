@@ -1,0 +1,4 @@
+[
+  { "IndexName": "nonceKey", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "nonceKey", "Direction": "1" }], "MgoIsUnique": true } },
+  { "IndexName": "expiresAt", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "expiresAt", "Direction": "1" }], "MgoIsUnique": false } }
+]

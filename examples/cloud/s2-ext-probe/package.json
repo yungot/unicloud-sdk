@@ -1,0 +1,7 @@
+{
+  "name": "s2-ext-probe",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-ext-storage": {}
+  }
+}

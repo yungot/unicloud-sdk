@@ -1,0 +1,7 @@
+# 统一使用 LF 换行，避免 Windows 与其他平台之间出现整文件差异
+* text=auto eol=lf
+
+# 二进制文件
+*.zip binary
+*.png binary
+*.jpg binary

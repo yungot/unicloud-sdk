@@ -1,0 +1,4 @@
+[
+  { "IndexName": "enrollId", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "enrollId", "Direction": "1" }], "MgoIsUnique": true } },
+  { "IndexName": "expiresAt", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "expiresAt", "Direction": "1" }], "MgoIsUnique": false } }
+]

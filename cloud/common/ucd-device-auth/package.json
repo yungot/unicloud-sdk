@@ -1,0 +1,7 @@
+{
+  "name": "ucd-device-auth",
+  "version": "1.0.0",
+  "description": "Device identity verification for uniCloud (desktop / web clients of @yungot/unicloud-sdk)",
+  "main": "index.js",
+  "dependencies": {}
+}

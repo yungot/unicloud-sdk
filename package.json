@@ -1,0 +1,61 @@
+{
+  "name": "@yungot/unicloud-sdk",
+  "version": "0.5.0",
+  "description": "非官方 uniCloud 客户端 SDK：让 Electron 桌面程序、普通网页和 Node 像 uni-app 一样直接调用云对象，附带宿主隔离与设备级请求签名",
+  "keywords": [
+    "unicloud",
+    "uni-app",
+    "uni-id",
+    "electron",
+    "desktop",
+    "cloud-object",
+    "serverless",
+    "device-identity"
+  ],
+  "author": "yungot",
+  "license": "MIT",
+  "homepage": "https://github.com/yungot/unicloud-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yungot/unicloud-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yungot/unicloud-sdk/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "cloud",
+    "examples",
+    "README.md",
+    "DEVELOPMENT.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

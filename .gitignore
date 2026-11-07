@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+unicloud.config.local.json
+
+# 真实环境验证脚本的输出（含服务空间信息）
+reports/
+
+# IDE
+.idea/
+.vscode/

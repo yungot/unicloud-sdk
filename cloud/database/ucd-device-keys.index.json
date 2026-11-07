@@ -1,0 +1,4 @@
+[
+  { "IndexName": "kid", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "kid", "Direction": "1" }], "MgoIsUnique": true } },
+  { "IndexName": "uid", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "uid", "Direction": "1" }], "MgoIsUnique": false } }
+]

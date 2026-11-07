@@ -1,0 +1,7 @@
+{
+  "name": "s3-guard-probe",
+  "dependencies": {
+    "ucd-device-auth": "file:../common/ucd-device-auth"
+  },
+  "extensions": {}
+}
