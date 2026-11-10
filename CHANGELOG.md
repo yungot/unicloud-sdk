@@ -1,5 +1,13 @@
 # Changelog
 
+## 未发布
+
+### 文档
+- 补充真实 Electron 应用验证记录：在 Windows Electron 桌面应用中完整使用 SDK 0.5.0，宿主桥、设备身份、safeStorage、登录态携带、`protectCloudObject`、打包安装版均在真实环境跑通，SDK 代码无需改动。README「验证状态」、§8 与 `docs/VERIFICATION.md` 同步更新。
+- 「待真实环境验证」清单调整：移除「真实 Electron 中运行宿主桥、safeStorage」；明确列出 uni-id、设备吊销、内置存储、macOS / Linux / Web。
+
+> 以上只改文档，代码与 0.5.0 相同。
+
 ## 0.5.0 首次公开发布 — 2026-11-07
 
 - 包名 `@yungot/unicloud-sdk`（仓库 `yungot/unicloud-sdk`），MIT 许可。

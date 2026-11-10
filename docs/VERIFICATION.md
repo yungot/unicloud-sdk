@@ -29,11 +29,30 @@
 3. 支付宝云数据库重复插入返回 `{ errCode: -409 }` → 识别为重放。
 4. 扩展存储需为云对象添加 `uni-cloud-ext-storage` 扩展库依赖。
 
+## 真实 Electron 应用验证（2026-11-10）
+
+在一个 Windows Electron 桌面应用中（Electron 37，从 GitHub 安装 SDK 0.5.0）完整使用本 SDK 调用支付宝云服务空间，并用 electron-builder 打包成安装版运行。期间 SDK 代码无需任何改动。
+
+| 能力 | 用法 | 结果 |
+|---|---|---|
+| 主进程 `createClient` + `importObject` | 多个业务云对象、数十个方法 | ✅ |
+| 宿主桥 `createHostHandler` | 渲染进程只能提交「对象名 + 方法名 + 参数」，按白名单执行；开发版与正式版可登记不同的白名单 | ✅ |
+| 幂等重试 `idempotentMethods` | 只读方法声明为幂等，网络抖动时自动重试；写方法只发一次 | ✅ |
+| 设备身份 `createSoftwareDeviceKey` + 自定义 `KeyVault` | 设备私钥用 Electron `safeStorage`（DPAPI）加密保存，首次启动自动登记 | ✅ |
+| 云端门禁 `protectCloudObject` | 所有业务云对象都用它；方法内通过 `this.device.deviceId` 实现按设备授权 | ✅ |
+| 防重放 | 把同一请求原样再发一次，返回 `DEVICE_PROOF_REPLAYED` | ✅ |
+| 登录态 `setUniIdToken` + 自定义 `TokenStore` | 应用自建登录的会话 token 交给 SDK 保存（`safeStorage` 加密），每次请求自动携带，云端 `this.getUniIdToken()` 取到；重启后免登录，退出时清除 | ✅（未用 uni-id，见下） |
+| 自定义传输 `createFetchTransport` | 使用 Electron `net.fetch`（走系统代理） | ✅ |
+| 打包后运行 | electron-builder（NSIS）安装版，SDK 打进主进程代码 | ✅ |
+
+该应用没有接入 uni-id（`ucd-device-co` 的 `resolveUid` 按预留方式返回 `null`），所以下列 uni-id 相关能力仍未实测。
+
 ## 尚未在真实环境验证
 
 - 内置存储上传与临时链接（离线已与官方逐字节一致）；中文 cloudPath
-- uni-id：登录经宿主桥、登录态持久化、设备绑定账号、设备吊销
-- 在真实 Electron 中运行宿主桥、safeStorage 保存设备私钥与登录态
+- uni-id：`uni-id-co` 登录经宿主桥、`newToken` 续期、`createUniIdResolver` 解析 uid、设备绑定账号
+- 设备吊销
+- macOS / Linux / Web 平台
 - 阿里云服务空间（`AliyunAdapter` 为实验实现）
 
 ## 自己运行

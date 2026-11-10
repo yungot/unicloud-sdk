@@ -9,7 +9,7 @@ cloud/
 ├── common/ucd-device-auth/          公共模块：登记、校验、吊销（只依赖 Node 内置 crypto）
 ├── cloudfunctions/
 │   ├── ucd-device-co/               云对象：设备登记（beginEnroll / completeEnroll）、我的设备、吊销
-│   ├── music-guarded-example/       业务云对象接入示例
+│   ├── todo-guarded-example/        业务云对象接入示例
 │   └── s3-guard-probe/              S3 临时测试对象（验证完删除）
 └── database/                        3 个集合的 schema 与索引
 ```
@@ -21,7 +21,7 @@ cloud/
    - 集合：`ucd-device-keys`、`ucd-device-enrolls`、`ucd-device-nonces`，权限全部为 false（只允许云端访问）。
    - 索引文件 `*.index.json` 若未自动生效，请在控制台为 `ucd-device-nonces.nonceKey`、`ucd-device-keys.kid`、`ucd-device-enrolls.enrollId` 手动建**唯一索引**。没有唯一索引时模块有兜底（插入后计数），但唯一索引更可靠也更快。
 3. **云对象 ucd-device-co**：复制到 `cloudfunctions/ucd-device-co`，右键 →「管理公共模块或扩展库依赖」勾选 `ucd-device-auth`（如使用 uni-id，同时勾选 `uni-id-common`），上传部署。
-4. **业务云对象**：参照 `music-guarded-example` 用 `protectCloudObject` 包装导出的方法，同样添加 `ucd-device-auth` 依赖。
+4. **业务云对象**：参照 `todo-guarded-example` 用 `protectCloudObject` 包装导出的方法，同样添加 `ucd-device-auth` 依赖。
    **不要在 `_before` 里抛错**：支付宝云会把 `_before` 抛出的错误变成 HTTP 500「用户函数代码语法或逻辑异常」，客户端拿不到 errCode，SDK 也就无法自动登记 / 校准时钟。
 
 ## 错误码

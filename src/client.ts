@@ -83,8 +83,8 @@ const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout
  *
  * 与 uni-app 写法一致，但不依赖 uni-app Runtime / WebView 桥 / Android：
  *   const cloud = createClient({...})
- *   const music = cloud.importObject('music')
- *   await music.search('晴天')
+ *   const todo = cloud.importObject('todo')
+ *   await todo.add('title demo', 'content demo')
  */
 export class UniCloudDesktopClient {
   readonly space: ResolvedSpaceConfig;

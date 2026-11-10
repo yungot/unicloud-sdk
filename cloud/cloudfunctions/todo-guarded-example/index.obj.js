@@ -16,18 +16,18 @@ const resolveUid = createUniIdResolver(uniIdCommon);
 
 module.exports = protectCloudObject(
   {
-    async search(keyword) {
-      return { errCode: 0, keyword, deviceId: this.device.deviceId, list: [] };
+    async list() {
+      return { errCode: 0, deviceId: this.device.deviceId, list: [] };
     },
-    async addFavorite(songId) {
-      return { errCode: 0, uid: this.uid, songId };
+    async add(title, content) {
+      return { errCode: 0, uid: this.uid, title, content };
     },
   },
   {
     auth,
-    object: 'music-guarded-example', // 必须与客户端 importObject 的名字一致
-    readMethods: ['search'],
-    requireUserMethods: ['addFavorite'],
+    object: 'todo-guarded-example', // 必须与客户端 importObject 的名字一致
+    readMethods: ['list'],
+    requireUserMethods: ['add'],
     resolveUid,
   },
 );
