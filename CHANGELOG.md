@@ -1,12 +1,18 @@
 # Changelog
 
-## 未发布
+## 0.5.1 — 2026-11-10（首次发布到 npm）
 
 ### 文档
 - 补充真实 Electron 应用验证记录：在 Windows Electron 桌面应用中完整使用 SDK 0.5.0，宿主桥、设备身份、safeStorage、登录态携带、`protectCloudObject`、打包安装版均在真实环境跑通，SDK 代码无需改动。README「验证状态」、§8 与 `docs/VERIFICATION.md` 同步更新。
 - 「待真实环境验证」清单调整：移除「真实 Electron 中运行宿主桥、safeStorage」；明确列出 uni-id、设备吊销、内置存储、macOS / Linux / Web。
 
-> 以上只改文档，代码与 0.5.0 相同。
+> 以上只改文档与示例，SDK 代码与 0.5.0 相同。
+
+### 示例
+- 云端业务接入示例更名为 `todo-guarded-example`，`examples/music-provider.ts` 更名为 `examples/todo-provider.ts`，统一使用官方 todo 示例。
+
+### 发布
+- npm 包增加 `docs/`、`SECURITY.md`；不再包含测试用的临时云对象 `s3-guard-probe`（没有登录校验，只用于仓库内的真实环境验证脚本）。
 
 ## 0.5.0 首次公开发布 — 2026-11-07
 

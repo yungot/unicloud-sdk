@@ -1,6 +1,6 @@
 {
   "name": "@yungot/unicloud-sdk",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "非官方 uniCloud 客户端 SDK：让 Electron 桌面程序、普通网页和 Node 像 uni-app 一样直接调用云对象，附带宿主隔离与设备级请求签名",
   "keywords": [
     "unicloud",
@@ -35,10 +35,14 @@
   "files": [
     "dist",
     "cloud",
+    "!cloud/cloudfunctions/s3-guard-probe",
     "examples",
+    "!examples/cloud/s2-ext-probe",
+    "docs",
     "README.md",
     "DEVELOPMENT.md",
     "CHANGELOG.md",
+    "SECURITY.md",
     "LICENSE"
   ],
   "sideEffects": false,

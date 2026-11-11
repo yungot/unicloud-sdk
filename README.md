@@ -69,7 +69,7 @@ const res = await todo.add('title demo', 'content demo') //导入云对象后就
 | S2 | **真实服务空间**：Windows 直调云对象、扩展存储上传下载 | ✅ 5/5 |
 | S3 | **真实服务空间**：设备自动登记、请求签名、重放拦截、错误码回传 | ✅ 6/6 |
 | S4 | uni-id 兼容（宿主桥隐藏 token、登录态持久化、云端 uid 解析） | ✅ 离线 62/62 · 未实测 |
-| 实战 | **真实项目**：迷笛音乐（Electron 桌面播放器）全部在线功能，含宿主桥、设备身份、safeStorage、登录态携带、打包安装版 | ✅ 无需改动 SDK |
+| 实战 | **真实 Electron 应用**（Windows）：宿主桥、设备身份、safeStorage、登录态携带、`protectCloudObject`、打包安装版 | ✅ 无需改动 SDK |
 
 ---
 
@@ -99,10 +99,10 @@ const res = await todo.add('title demo', 'content demo') //导入云对象后就
 在你的项目（如 Electron 工程）中安装：
 
 ```bash
-# 方式一：从 npm 安装（发布到 npm 后可用）
+# 方式一：从 npm 安装（推荐）
 npm install @yungot/unicloud-sdk
 
-# 方式二：直接从 GitHub 安装（安装时自动编译）
+# 方式二：直接从 GitHub 安装最新代码（安装时自动编译）
 npm install github:yungot/unicloud-sdk
 ```
 
@@ -327,7 +327,7 @@ const cloud = createClient({
     deviceName: os.hostname(),
   },
 })
-await cloud.importObject('music').search('晴天')   // 自动附带设备证明；首次自动登记
+await cloud.importObject('todo').add('title demo', 'content demo')   // 自动附带设备证明；首次自动登记
 ```
 
 **云端**（模板在 `cloud/` 目录，部署步骤见 `cloud/README.md`）
@@ -337,13 +337,13 @@ const { createDeviceAuth, createUniCloudStore, protectCloudObject } = require('u
 const auth = createDeviceAuth({ store: createUniCloudStore(uniCloud.database()) })
 
 module.exports = protectCloudObject({
-  async search(keyword) { /* this.device、this.uid 可用 */ },
-  async addFavorite(songId) { /* ... */ },
+  async list() { /* this.device、this.uid 可用 */ },
+  async add(title, content) { /* ... */ },
 }, {
   auth,
-  object: 'music',                       // 与客户端 importObject 的名字一致
-  readMethods: ['search'],               // 只读高频方法：只校验时间窗
-  requireUserMethods: ['addFavorite'],   // 必须登录的方法
+  object: 'todo',                        // 与客户端 importObject 的名字一致
+  readMethods: ['list'],                 // 只读高频方法：只校验时间窗
+  requireUserMethods: ['add'],           // 必须登录的方法
   resolveUid,                            // 用 uni-id-common 校验 token，返回 uid
 })
 ```
@@ -395,7 +395,7 @@ Authorization = HMAC-SHA256 Credential=..., SignedHeaders=..., Signature=...
 - 62 项单元测试：错误语义、uni-id 续期、云存储、幂等重试、宿主桥、设备身份端到端（SDK ↔ 云端模块）等
 
 - **真实服务空间**（S3）：设备自动登记、请求签名、一次性 nonce 与重放拦截、错误码回传（[docs/VERIFICATION.md](docs/VERIFICATION.md)）
-- **真实项目**（迷笛音乐，Windows Electron 桌面播放器，2026-11-10）：真实 Electron 中运行宿主桥、白名单、幂等重试；safeStorage 保存设备私钥与登录态；自定义登录 token 经 `setUniIdToken` 持久化并自动携带；`protectCloudObject` 守护全部业务云对象；electron-builder 安装版正常运行。开发全程未改动 SDK（详见 [docs/VERIFICATION.md](docs/VERIFICATION.md)）
+- **真实 Electron 应用**（Windows，2026-11-10）：宿主桥、白名单、幂等重试；safeStorage 保存设备私钥与登录态；自定义登录 token 经 `setUniIdToken` 持久化并自动携带；`protectCloudObject` 守护全部业务云对象；electron-builder 安装版正常运行，SDK 无需改动（详见 [docs/VERIFICATION.md](docs/VERIFICATION.md)）
 
 **待真实环境验证**
 
@@ -419,7 +419,7 @@ SDK 核心只依赖标准 `fetch` 与 WebCrypto（Node 20+ / Electron / 现代�
 
 | 平台 | 调用能力 | 凭据位置 | 设备密钥 | 状态 |
 |---|---|---|---|---|
-| Windows（Electron） | ✓ | 主进程 + 宿主桥 | 软件密钥 + safeStorage（DPAPI）已实现；TPM 规划中 | **当前主目标**，已在真实项目中使用 |
+| Windows（Electron） | ✓ | 主进程 + 宿主桥 | 软件密钥 + safeStorage（DPAPI）已实现；TPM 规划中 | **当前主目标**，已在真实 Electron 应用中验证 |
 | macOS（Electron） | ✓ | 同上 | safeStorage（Keychain） | **同方案支持**，发布需 Apple 签名与公证；未在 Mac 实机测试 |
 | Linux（Electron） | ✓ | 同上 | safeStorage（libsecret） | 顺带支持，未测试 |
 | Web（浏览器） | ✓（需在控制台「跨域配置」加域名） | 浏览器内，可被提取（与官方 H5 相同） | WebCrypto 不可导出密钥 + IndexedDB | 预留，未测试 |
